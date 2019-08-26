@@ -1,0 +1,28 @@
+{
+  "name": "api",
+  "version": "0.0.1",
+  "description": "api",
+  "main": "src/index.js",
+  "repository": "https://github.com/aminelouma99/Parky-api",
+  "author": "Djamel",
+  "license": "MIT",
+  "scripts": {
+    "dev": "docker-compose -f docker-compose.dev.yml up -d && micro-dev",
+    "start": "micro"
+  },
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^8.1.0",
+    "mariadb": "^2.1.0",
+    "micro": "^9.3.4",
+    "mysql2": "^1.6.5",
+    "sequelize": "^5.16.0"
+  },
+  "devDependencies": {
+    "eslint-config-standard": "^11.0.0",
+    "micro-dev": "^3.0.0",
+    "prettier": "^1.14.2",
+    "standard": "^11.0.1"
+  }
+}

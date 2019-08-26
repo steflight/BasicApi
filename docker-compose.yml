@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.3.14
+    restart: always
+    volumes:
+      - ./export:/export
+      - /home/parky/mysql:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ONETIME_PASSWORD=yes
+      - MYSQL_DATABASE=api
+      - MYSQL_USER=api
+      - MYSQL_PASSWORD=api
+
+  adminer:
+    image: adminer
+    links:
+      - mariadb:db
+    ports:
+      - 8080:8080
+
+  redis:
+    image: redis:5.0-rc4-alpine
+    restart: always
+    volumes:
+      - /home/parky/redis:/data
+    command: ['redis-server', '--appendonly yes']
+
+  api:
+    build: .
+    restart: always
+    ports:
+      - 127.0.0.1:3000:3000
+    environment:
+      - REDIS=//redis:6379
+    links:
+      - mariadb
+      - redis
+

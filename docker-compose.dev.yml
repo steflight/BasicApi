@@ -1,0 +1,35 @@
+version: '3'
+
+services:
+  mariadb:
+    image: mariadb:10.4.7
+    ports:
+      - 3308:3306
+    volumes:
+      - ./export:/export
+      - mariadbDataVolume:/var/lib/mysql
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_ONETIME_PASSWORD=yes
+      - MYSQL_DATABASE=api
+      - MYSQL_USER=api
+      - MYSQL_PASSWORD=api
+
+  adminer:
+    image: adminer
+    links:
+      - mariadb:db
+    ports:
+      - 8088:8080
+
+  redis:
+    image: redis:5.0-rc4-alpine
+    ports:
+      - 6379:6379
+    volumes:
+      - redisDataVolume:/data
+    command: ['redis-server', '--appendonly yes']
+
+volumes:
+  mariadbDataVolume: {}
+  redisDataVolume: {}
